@@ -1,0 +1,9 @@
+/target
+/Cargo.lock
+
+# Node Modules
+/node_modules
+
+# Enviroments
+.env
+.env.*
