@@ -1,35 +1,28 @@
-
-
-
-
 async function init() {
-  let rustApp = null
+    let rustApp = null;
 
-  try {
-    rustApp = await import('../pkg')
-  } catch(err) {
-    console.error(err)
-    return;
-  }
+    try {
+        rustApp = await import('../pkg')
+    } catch (e) {
+        console.error(e);
+        return;
+    }
 
-  console.log(rustApp)
+    console.log(rustApp);
 
-  const input = document.getElementById('upload')
-  const fileReader = new FileReader()
+    const file = document.getElementById('upload');
+    const fileReader = new FileReader();
+    
+    fileReader.onload = () => {
+        const base64 = fileReader.result.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
 
-  fileReader.onloadend = () => {
-    let base64 = fileReader.result.replace(
-      /^data:image\/(png|jpeg|jpg);base64,/, ''
-    )
-    let img_data_url = rustApp.grayscale(base64)
-    document.getElementById('new-img').setAttribute(
-      'src', img_data_url
-    )
-  }
+        console.log(file.files[0])
+        console.log(base64);
+    }
 
-  input.addEventListener('change', () => {
-    fileReader.readAsDataURL(input.files[0])
-  })
+    file.addEventListener('change', () => {
+        fileReader.readAsDataURL(file.files[0])
+    })
 }
 
-init()
+init();
